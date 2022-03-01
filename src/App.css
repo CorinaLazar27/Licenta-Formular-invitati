@@ -1,5 +1,11 @@
 .App {
-  text-align: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  background-color: rgb(230, 180, 230);
 }
 
 .App-logo {
@@ -35,4 +41,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Background {
+  background: rgb(252, 252, 252);
+  border-radius: 4px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  padding-bottom: 66px;
+  margin-bottom: 20%;
+  margin-top: 20%;
+  padding-top: 46px;
+  text-align: center;
+  width: 90%;
 }
