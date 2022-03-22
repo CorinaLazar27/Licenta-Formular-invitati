@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Form, Formik } from "formik";
-import { Button, Container, Grid, Tooltip, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { FormikTextField } from "./FormikComponents/FormikTextField";
+import { FormikSelectSimple } from "./FormikComponents/FormikSelectSimple";
 
 function FormPage() {
   const history = useHistory();
-  const [email, setEmail] = useState();
-  const [name, setName] = useState();
-  const [age, setAge] = useState();
-  const [location, setLocation] = useState();
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -199,26 +195,12 @@ function FormPage() {
     );
   };
 
-  const ShowValues = () => {
-    console.log(email);
-    console.log(name);
-    console.log(age);
-    console.log(location);
-    console.log(organizerOpinion);
-    console.log(drinksOpinion);
-    console.log(cakesOpinion);
-    console.log(fruitsOpinion);
-    console.log(appetizerOpinion);
-    console.log(maincourseOpinion);
-    console.log(type2Opinion);
-    console.log(musicOpinion);
-  };
-
   function FormOptions(values) {
     axios({
       method: "POST",
       url: "/postoptionsinvitation",
       data: {
+        emailOrganizer: values.emailOrganizer,
         email: values.email,
         name: values.name,
         age: values.age,
@@ -251,77 +233,74 @@ function FormPage() {
       <div className="Background_inv">
         <Formik
           initialValues={{
+            emailOrganizer: "",
             email: "",
             name: "",
             age: "",
             location: "",
-            organizerOpinion: "",
-            drinksOpinion: "",
-            cakesOpinion: "",
-            fruitsOpinion: "",
-            appetizerOpinion: "",
-            maincourseOpinion: "",
-            type2Opinion: "",
-            musicOpinion: "",
+            organizerOpinion: [],
+            drinksOpinion: [],
+            cakesOpinion: [],
+            fruitsOpinion: [],
+            appetizerOpinion: [],
+            maincourseOpinion: [],
+            type2Opinion: [],
+            musicOpinion: [],
           }}
           onSubmit={(values) => {
             FormOptions(values);
           }}
         >
           <Form>
-            <Grid container spacing={2} columns={16}>
-              <Grid item xs={8}>
-                <TextField
+            <Grid
+              container
+              columnSpacing={2}
+              rowSpacing={3}
+              padding={3}
+              display="flex"
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Grid item xs={12}>
+                <FormikTextField
+                  name="emailOrganizer"
                   id="outlined-basic"
-                  label="Email"
-                  variant="standard"
-                  onChange={(event) => setEmail(event.target.value)}
-                  required
-                  inputProps={{
-                    pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{(2, 4)}$",
-                  }}
-                />
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  id="outlined-basic"
-                  label="Nume"
-                  variant="standard"
-                  onChange={(event) => setName(event.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  id="outlined-basic"
-                  label="Ani"
-                  variant="standard"
-                  onChange={(event) => setAge(event.target.value)}
-                />
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  id="outlined-basic"
-                  label="Locatie"
-                  variant="standard"
-                  onChange={(event) => setLocation(event.target.value)}
+                  label="Email organizator"
                 />
               </Grid>
 
-              <Grid item xs={8}>
-                <label>De unde cunosti organizatorul?</label>
+              <Grid item xs={12}>
+                <FormikTextField
+                  name="email"
+                  id="email"
+                  label="Email personal"
+                />
               </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
-                  value={organizerOpinion}
+              <Grid item xs={12}>
+                <FormikTextField id="outlined-basic" label="Nume" name="name" />
+              </Grid>
+              <Grid item xs={12}>
+                <FormikTextField id="age" label="Ani" name="age" />
+              </Grid>
+              <Grid item xs={12}>
+                <FormikTextField
+                  id="outlined-basic"
+                  label="Localitate domiciliu"
+                  name="location"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <label>De unde cunosti organizatorul?</label>
+                <FormikSelectSimple
+                  id="organizerOpinion"
+                  name="organizerOpinion"
                   onChange={handleChange_organizerOpinion}
+                  multiple
+                  items={acquaintance}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -346,22 +325,20 @@ function FormPage() {
                       {name}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
-              <Grid item xs={8}>
+
+              <Grid item xs={12}>
                 <label>Ce bauturi ai dori sa bei?</label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="drinksOpinion"
+                  name="drinksOpinion"
                   multiple
-                  value={drinksOpinion}
+                  items={drinks}
                   onChange={handleChange_drinksOpinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -386,25 +363,22 @@ function FormPage() {
                       {drink}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <label>
                   Ce prajituri ti-ar placea sa mananci din candy bar?
                 </label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="cakesOpinion"
+                  name="cakesOpinion"
                   multiple
-                  value={cakesOpinion}
+                  items={cookies}
                   onChange={handleChange_cakesOpinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -429,23 +403,20 @@ function FormPage() {
                       {cookie}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <label>Ce fructe ai dori sa mananci?</label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="fruitsOpinion"
+                  name="fruitsOpinion"
                   multiple
-                  value={fruitsOpinion}
+                  items={fruits}
                   onChange={handleChange_fruitsOpinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -470,23 +441,20 @@ function FormPage() {
                       {fruit}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <label>Ce gustari doresti sa mananci?</label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="appetizerOpinion"
+                  name="appetizerOpinion"
                   multiple
-                  value={appetizerOpinion}
+                  items={appetizer}
                   onChange={handleChange_appetizerOpinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -511,23 +479,20 @@ function FormPage() {
                       {app}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <label>Ce doresti sa mananci la felul 1?</label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="maincourseOpinion"
+                  name="maincourseOpinion"
                   multiple
-                  value={maincourseOpinion}
+                  items={maincourse}
                   onChange={handleChange_maincourseOpinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -552,23 +517,20 @@ function FormPage() {
                       {mc}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <label>Ce doresti sa mananci la felul 2?</label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="type2Opinion"
+                  name="type2Opinion"
                   multiple
-                  value={type2Opinion}
+                  items={type2}
                   onChange={handleChange_type2Opinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -593,23 +555,20 @@ function FormPage() {
                       {t2}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <label>Ce muzica ti-ai dori sa asculti?</label>
-              </Grid>
-              <Grid item xs={8}>
-                <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
+                <FormikSelectSimple
+                  id="musicOpinion"
+                  name="musicOpinion"
                   multiple
-                  value={musicOpinion}
+                  items={music}
                   onChange={handleChange_musicOpinion}
                   input={
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
-                  sx={{ minWidth: "60%", maxWidth: "60%" }}
                   renderValue={(selected) => (
                     <Box
                       sx={{
@@ -634,7 +593,7 @@ function FormPage() {
                       {m}
                     </MenuItem>
                   ))}
-                </Select>
+                </FormikSelectSimple>
               </Grid>
             </Grid>
             <br></br>
