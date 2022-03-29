@@ -20,9 +20,6 @@ export const FormikSelectSimple = ({ items, ...props }) => {
       InputProps={{
         disabled: props.readOnly ?? false,
       }}
-      SelectProps={{
-        multiple: true,
-      }}
     >
       {items.map((item) => (
         <MenuItem key={item} value={item}>
