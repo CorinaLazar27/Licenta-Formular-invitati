@@ -13,7 +13,6 @@ export const FormikRatingField = (props) => {
       onChange={field.onChange}
       icon={<FavoriteIcon fontSize="inherit" />}
       emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-      error={(meta.touched && Boolean(meta.error)) || Boolean(props.apiError)}
       sx={{
         color: "red",
       }}
