@@ -35,13 +35,12 @@ function FormPage() {
     setOpenError(false);
     setOpenSucces(false);
   };
-
-  function AperitiveRating(values) {
+  function ratingChestionar(values) {
     setLoading(true);
-    console.log("AperitiveRating");
+    console.log("Rating Chestionar");
     axios({
       method: "POST",
-      url: "/aperitiveRating",
+      url: "http://localhost:5000/ratingChestionar",
       data: {
         event: values.event,
         date: values.date,
@@ -50,104 +49,17 @@ function FormPage() {
         aperitivTraditionalRating: values.aperitivTraditionalRating,
         aperitivVegetarianRating: values.aperitivVegetarianRating,
         aperitivFructeDeMareRating: values.aperitivFructeDeMareRating,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
-        Type1Rating(values);
 
-        console.log(res);
-        console.log("aperitive");
-      })
-      .catch((error) => {
-        if (error.response) {
-          setOpenError(true);
-          setLoading(false);
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
-
-  function Type1Rating(values) {
-    console.log("Type1Rating");
-
-    axios({
-      method: "POST",
-      url: "/type1Rating",
-      data: {
-        event: values.event,
-        date: values.date,
-        emailOrganizer: values.emailOrganizer,
-        email: values.email,
         supaTaieteiRating: values.supaTaieteiRating,
         ciorbaAcraRating: values.ciorbaAcraRating,
         ciorbaCartofiRating: values.ciorbaCartofiRating,
         ciorbaPerisoareRating: values.ciorbaPerisoareRating,
-      },
-    })
-      .then((response) => {
-        Type2Rating(values);
-        const res = response.data;
-        console.log(res);
-        console.log("felul1");
-      })
-      .catch((error) => {
-        if (error.response) {
-          setOpenError(true);
-          setLoading(false);
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
 
-  function Type2Rating(values) {
-    console.log("Type2Rating");
-    axios({
-      method: "POST",
-      url: "/type2Rating",
-      data: {
-        event: values.event,
-        date: values.date,
-        emailOrganizer: values.emailOrganizer,
-        email: values.email,
         sarmaleRating: values.sarmaleRating,
         carnePuiRating: values.carnePuiRating,
         carnePorcRating: values.carnePorcRating,
         carneVitaRating: values.carneVitaRating,
-      },
-    })
-      .then((response) => {
-        const res = response.data;
 
-        MusicRating(values);
-        console.log(res);
-        console.log("felul 2");
-      })
-      .catch((error) => {
-        if (error.response) {
-          setOpenError(true);
-          setLoading(false);
-          console.log(error.response);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
-      });
-  }
-
-  function MusicRating(values) {
-    console.log("MusicRating");
-    axios({
-      method: "POST",
-      url: "/musicRating",
-      data: {
-        event: values.event,
-        date: values.date,
-        emailOrganizer: values.emailOrganizer,
-        email: values.email,
         muzicaComercialaRating: values.muzicaComercialaRating,
         muzicaDiscoRating: values.muzicaDiscoRating,
         muzicaPopRating: values.muzicaPopRating,
@@ -157,31 +69,169 @@ function FormPage() {
     })
       .then((response) => {
         const res = response.data;
-        console.log(res);
+        setLoading(false);
         // setOpenSucces(true);
         history.push("/succes");
-        console.log("muzica");
+        console.log(res);
+        // console.log("aperitive");
       })
       .catch((error) => {
-        setOpenError(true);
         if (error.response) {
+          setOpenError(true);
+          setLoading(false);
           console.log(error.response);
           console.log(error.response.status);
           console.log(error.response.headers);
         }
-      })
-      .finally(() => setLoading(false));
+      });
   }
+
+  // function AperitiveRating(values) {
+  //   setLoading(true);
+  //   console.log("AperitiveRating");
+  //   axios({
+  //     method: "POST",
+  //     url: "/aperitiveRating",
+  //     data: {
+  //       event: values.event,
+  //       date: values.date,
+  //       emailOrganizer: values.emailOrganizer,
+  //       email: values.email,
+  //       aperitivTraditionalRating: values.aperitivTraditionalRating,
+  //       aperitivVegetarianRating: values.aperitivVegetarianRating,
+  //       aperitivFructeDeMareRating: values.aperitivFructeDeMareRating,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       const res = response.data;
+  //       Type1Rating(values);
+
+  //       console.log(res);
+  //       console.log("aperitive");
+  //     })
+  //     .catch((error) => {
+  //       if (error.response) {
+  //         setOpenError(true);
+  //         setLoading(false);
+  //         console.log(error.response);
+  //         console.log(error.response.status);
+  //         console.log(error.response.headers);
+  //       }
+  //     });
+  // }
+
+  // function Type1Rating(values) {
+  //   console.log("Type1Rating");
+
+  //   axios({
+  //     method: "POST",
+  //     url: "/type1Rating",
+  //     data: {
+  //       event: values.event,
+  //       date: values.date,
+  //       emailOrganizer: values.emailOrganizer,
+  //       email: values.email,
+  //       supaTaieteiRating: values.supaTaieteiRating,
+  //       ciorbaAcraRating: values.ciorbaAcraRating,
+  //       ciorbaCartofiRating: values.ciorbaCartofiRating,
+  //       ciorbaPerisoareRating: values.ciorbaPerisoareRating,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       Type2Rating(values);
+  //       const res = response.data;
+  //       console.log(res);
+  //       console.log("felul1");
+  //     })
+  //     .catch((error) => {
+  //       if (error.response) {
+  //         setOpenError(true);
+  //         setLoading(false);
+  //         console.log(error.response);
+  //         console.log(error.response.status);
+  //         console.log(error.response.headers);
+  //       }
+  //     });
+  // }
+
+  // function Type2Rating(values) {
+  //   console.log("Type2Rating");
+  //   axios({
+  //     method: "POST",
+  //     url: "/type2Rating",
+  //     data: {
+  //       event: values.event,
+  //       date: values.date,
+  //       emailOrganizer: values.emailOrganizer,
+  //       email: values.email,
+  //       sarmaleRating: values.sarmaleRating,
+  //       carnePuiRating: values.carnePuiRating,
+  //       carnePorcRating: values.carnePorcRating,
+  //       carneVitaRating: values.carneVitaRating,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       const res = response.data;
+
+  //       MusicRating(values);
+  //       console.log(res);
+  //       console.log("felul 2");
+  //     })
+  //     .catch((error) => {
+  //       if (error.response) {
+  //         setOpenError(true);
+  //         setLoading(false);
+  //         console.log(error.response);
+  //         console.log(error.response.status);
+  //         console.log(error.response.headers);
+  //       }
+  //     });
+  // }
+
+  // function MusicRating(values) {
+  //   console.log("MusicRating");
+  //   axios({
+  //     method: "POST",
+  //     url: "/musicRating",
+  //     data: {
+  //       event: values.event,
+  //       date: values.date,
+  //       emailOrganizer: values.emailOrganizer,
+  //       email: values.email,
+  //       muzicaComercialaRating: values.muzicaComercialaRating,
+  //       muzicaDiscoRating: values.muzicaDiscoRating,
+  //       muzicaPopRating: values.muzicaPopRating,
+  //       muzicaRockRating: values.muzicaRockRating,
+  //       muzicaDePetrecereRating: values.muzicaDePetrecereRating,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       const res = response.data;
+  //       console.log(res);
+  //       // setOpenSucces(true);
+  //       history.push("/succes");
+  //       console.log("muzica");
+  //     })
+  //     .catch((error) => {
+  //       setOpenError(true);
+  //       if (error.response) {
+  //         console.log(error.response);
+  //         console.log(error.response.status);
+  //         console.log(error.response.headers);
+  //       }
+  //     })
+  //     .finally(() => setLoading(false));
+  // }
 
   const ValidationsForm = Yup.object().shape({
     event: Yup.string().required("Trebuie aleasă o opțiune!"),
-    emailOrganizer: Yup.string()
-      .required("Introdu email-ul organizatorului!")
-      .email("Introdu un email valid!"),
-    email: Yup.string()
-      .required("Introdu email-ul tău!")
-      .email("Introdu un email valid!"),
-    name: Yup.string().required("Introdu numele!"),
+    // emailOrganizer: Yup.string()
+    //   .required("Introdu email-ul organizatorului!")
+    //   .email("Introdu un email valid!"),
+    // email: Yup.string()
+    //   .required("Introdu email-ul tău!")
+    //   .email("Introdu un email valid!"),
+    // name: Yup.string().required("Introdu numele!"),
   });
 
   return (
@@ -229,7 +279,7 @@ function FormPage() {
             date: new Date(),
             emailOrganizer: "",
             email: "",
-            name: "",
+            // name: "",
             age: "",
             location: "",
 
@@ -256,8 +306,9 @@ function FormPage() {
           validationSchema={ValidationsForm}
           onSubmit={(values) => {
             values.date = values.date.toLocaleDateString();
-
-            AperitiveRating(values);
+            console.log("SUBMIT");
+            ratingChestionar(values);
+            // AperitiveRating(values);
           }}
         >
           <Form>
@@ -292,6 +343,10 @@ function FormPage() {
                   <FormikDatePicker name="date" label="Data evenimentului" />
                 </LocalizationProvider>
               </Grid>
+              {/* <Grid item xs={12}>
+                {" "}
+                <FormikTextField id="name" name="name" label="Nume" />
+              </Grid> */}
               <Grid item xs={12}>
                 <FormikTextField
                   name="email"
@@ -753,7 +808,7 @@ function FormPage() {
               <Grid item xs={12}>
                 <LoadingButton
                   loading={loading}
-                  variant="contained"
+                  //  variant="contained"
                   endIcon={<SendIcon />}
                   id="fillpdfbutton"
                   type="submit"
