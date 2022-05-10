@@ -12,6 +12,7 @@ export const FormikTextField = (props) => {
       label={props.label}
       type={props.type ? props.type : "text"}
       fullWidth
+      defaultValue={field.value ?? ""}
       value={field.value ?? ""}
       onChange={field.onChange}
       error={(meta.touched && Boolean(meta.error)) || Boolean(props.apiError)}

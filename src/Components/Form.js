@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -14,10 +14,23 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import * as Yup from "yup";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useLocation } from "react-router-dom";
+
 function FormPage() {
   const history = useHistory();
 
-  const eventsSelectItems = ["Nunta", "Botez", "Aniversare"];
+  function getURL() {
+    const urlString = window.location.search;
+    let urlParams = new URLSearchParams(urlString);
+
+    window.localStorage.setItem("emailURL", urlParams.get("email"));
+    window.localStorage.setItem("eventURL", urlParams.get("event"));
+    window.localStorage.setItem("dateURL", urlParams.get("date"));
+  }
+
+  useEffect(() => {
+    getURL();
+  }, []);
 
   const [openError, setOpenError] = useState(false);
 
@@ -86,152 +99,15 @@ function FormPage() {
       });
   }
 
-  // function AperitiveRating(values) {
-  //   setLoading(true);
-  //   console.log("AperitiveRating");
-  //   axios({
-  //     method: "POST",
-  //     url: "/aperitiveRating",
-  //     data: {
-  //       event: values.event,
-  //       date: values.date,
-  //       emailOrganizer: values.emailOrganizer,
-  //       email: values.email,
-  //       aperitivTraditionalRating: values.aperitivTraditionalRating,
-  //       aperitivVegetarianRating: values.aperitivVegetarianRating,
-  //       aperitivFructeDeMareRating: values.aperitivFructeDeMareRating,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       const res = response.data;
-  //       Type1Rating(values);
-
-  //       console.log(res);
-  //       console.log("aperitive");
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         setOpenError(true);
-  //         setLoading(false);
-  //         console.log(error.response);
-  //         console.log(error.response.status);
-  //         console.log(error.response.headers);
-  //       }
-  //     });
-  // }
-
-  // function Type1Rating(values) {
-  //   console.log("Type1Rating");
-
-  //   axios({
-  //     method: "POST",
-  //     url: "/type1Rating",
-  //     data: {
-  //       event: values.event,
-  //       date: values.date,
-  //       emailOrganizer: values.emailOrganizer,
-  //       email: values.email,
-  //       supaTaieteiRating: values.supaTaieteiRating,
-  //       ciorbaAcraRating: values.ciorbaAcraRating,
-  //       ciorbaCartofiRating: values.ciorbaCartofiRating,
-  //       ciorbaPerisoareRating: values.ciorbaPerisoareRating,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       Type2Rating(values);
-  //       const res = response.data;
-  //       console.log(res);
-  //       console.log("felul1");
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         setOpenError(true);
-  //         setLoading(false);
-  //         console.log(error.response);
-  //         console.log(error.response.status);
-  //         console.log(error.response.headers);
-  //       }
-  //     });
-  // }
-
-  // function Type2Rating(values) {
-  //   console.log("Type2Rating");
-  //   axios({
-  //     method: "POST",
-  //     url: "/type2Rating",
-  //     data: {
-  //       event: values.event,
-  //       date: values.date,
-  //       emailOrganizer: values.emailOrganizer,
-  //       email: values.email,
-  //       sarmaleRating: values.sarmaleRating,
-  //       carnePuiRating: values.carnePuiRating,
-  //       carnePorcRating: values.carnePorcRating,
-  //       carneVitaRating: values.carneVitaRating,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       const res = response.data;
-
-  //       MusicRating(values);
-  //       console.log(res);
-  //       console.log("felul 2");
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         setOpenError(true);
-  //         setLoading(false);
-  //         console.log(error.response);
-  //         console.log(error.response.status);
-  //         console.log(error.response.headers);
-  //       }
-  //     });
-  // }
-
-  // function MusicRating(values) {
-  //   console.log("MusicRating");
-  //   axios({
-  //     method: "POST",
-  //     url: "/musicRating",
-  //     data: {
-  //       event: values.event,
-  //       date: values.date,
-  //       emailOrganizer: values.emailOrganizer,
-  //       email: values.email,
-  //       muzicaComercialaRating: values.muzicaComercialaRating,
-  //       muzicaDiscoRating: values.muzicaDiscoRating,
-  //       muzicaPopRating: values.muzicaPopRating,
-  //       muzicaRockRating: values.muzicaRockRating,
-  //       muzicaDePetrecereRating: values.muzicaDePetrecereRating,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       const res = response.data;
-  //       console.log(res);
-  //       // setOpenSucces(true);
-  //       history.push("/succes");
-  //       console.log("muzica");
-  //     })
-  //     .catch((error) => {
-  //       setOpenError(true);
-  //       if (error.response) {
-  //         console.log(error.response);
-  //         console.log(error.response.status);
-  //         console.log(error.response.headers);
-  //       }
-  //     })
-  //     .finally(() => setLoading(false));
-  // }
-
   const ValidationsForm = Yup.object().shape({
     event: Yup.string().required("Trebuie aleasă o opțiune!"),
-    // emailOrganizer: Yup.string()
-    //   .required("Introdu email-ul organizatorului!")
-    //   .email("Introdu un email valid!"),
-    // email: Yup.string()
-    //   .required("Introdu email-ul tău!")
-    //   .email("Introdu un email valid!"),
-    // name: Yup.string().required("Introdu numele!"),
+
+    emailOrganizer: Yup.string()
+      .required("Introdu email-ul organizatorului!")
+      .email("Introdu un email valid!"),
+    email: Yup.string()
+      .required("Introdu email-ul tău!")
+      .email("Introdu un email valid!"),
   });
 
   return (
@@ -242,7 +118,7 @@ function FormPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "purple",
+        backgroundColor: "#9575cd",
       }}
     >
       <Snackbar
@@ -275,13 +151,10 @@ function FormPage() {
       >
         <Formik
           initialValues={{
-            event: "",
-            date: new Date(),
-            emailOrganizer: "",
+            event: window.localStorage.getItem("eventURL"),
+            date: window.localStorage.getItem("dateURL"),
+            emailOrganizer: window.localStorage.getItem("emailURL"),
             email: "",
-            // name: "",
-            age: "",
-            location: "",
 
             aperitivTraditionalRating: 0,
             aperitivVegetarianRating: 0,
@@ -305,10 +178,43 @@ function FormPage() {
           }}
           validationSchema={ValidationsForm}
           onSubmit={(values) => {
-            values.date = values.date.toLocaleDateString();
+            if (values.aperitivTraditionalRating === 0)
+              values.aperitivTraditionalRating = "0";
+
+            if (values.aperitivVegetarianRating === 0)
+              values.aperitivVegetarianRating = "0";
+            if (values.aperitivFructeDeMareRating === 0)
+              values.aperitivFructeDeMareRating = "0";
+
+            if (values.supaTaieteiRating === 0) values.supaTaieteiRatin = "0";
+            if (values.ciorbaAcraRating === 0) values.ciorbaAcraRating = "0";
+            if (values.ciorbaCartofiRating === 0)
+              values.ciorbaCartofiRating = "0";
+            if (values.ciorbaPerisoareRating === 0)
+              values.ciorbaPerisoareRating = "0";
+
+            if (values.sarmaleRating === 0) values.sarmaleRating = "0";
+            if (values.carnePuiRating === 0) values.carnePuiRating = "0";
+            if (values.carnePorcRating === 0) values.carnePorcRating = "0";
+            if (values.carneVitaRating === 0) values.carneVitaRating = "0";
+
+            if (values.muzicaComercialaRating === 0)
+              values.muzicaComercialaRating = "0";
+            if (values.muzicaDiscoRating === 0) values.muzicaDiscoRating = "0";
+            if (values.muzicaPopRating === 0) values.muzicaPopRating = "0";
+            if (values.muzicaRockRating === 0) values.muzicaRockRating = "0";
+            if (values.muzicaDePetrecereRating === 0)
+              values.muzicaDePetrecereRating = "0";
+            if (
+              typeof values.date === "object" &&
+              values.date !== null &&
+              "toLocaleDateString" in values.date
+            ) {
+              values.date = values.date.toLocaleDateString();
+            }
+            // values.date = values.date.toLocaleDateString();
             console.log("SUBMIT");
             ratingChestionar(values);
-            // AperitiveRating(values);
           }}
         >
           <Form>
@@ -331,22 +237,24 @@ function FormPage() {
 
               <Grid item xs={12}>
                 {" "}
-                <FormikSelectSimple
+                <FormikTextField
+                  id="event"
+                  name="event"
+                  label="Tip eveniment"
+                ></FormikTextField>
+                {/* <FormikSelectSimple
                   id="event"
                   name="event"
                   label="Tip eveniment"
                   items={eventsSelectItems}
-                />
+                /> */}
               </Grid>
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <FormikDatePicker name="date" label="Data evenimentului" />
                 </LocalizationProvider>
               </Grid>
-              {/* <Grid item xs={12}>
-                {" "}
-                <FormikTextField id="name" name="name" label="Nume" />
-              </Grid> */}
+
               <Grid item xs={12}>
                 <FormikTextField
                   name="email"
@@ -354,57 +262,6 @@ function FormPage() {
                   label="Email personal"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormikTextField id="outlined-basic" label="Nume" name="name" />
-              </Grid>
-              <Grid item xs={12}>
-                <FormikTextField id="age" label="Ani" name="age" />
-              </Grid>
-              <Grid item xs={12}>
-                <FormikTextField
-                  id="outlined-basic"
-                  label="Localitate domiciliu"
-                  name="location"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <label>De unde cunosti organizatorul?</label>
-                <FormikSelectSimple
-                  id="organizerOpinion"
-                  name="organizerOpinion"
-                  onChange={handleChange_organizerOpinion}
-                  multiple
-                  items={acquaintance}
-                  input={
-                    <OutlinedInput id="select-multiple-chip" label="Chip" />
-                  }
-                  renderValue={(selected) => (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: 0.5,
-                      }}
-                    >
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {acquaintance.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, organizerOpinion, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </FormikSelectSimple>
-              </Grid> */}
 
               <Grid item xs={12}>
                 <Box
@@ -813,10 +670,10 @@ function FormPage() {
                   id="fillpdfbutton"
                   type="submit"
                   sx={{
-                    backgroundColor: "purple",
+                    backgroundColor: "#9575cd",
                     color: "white",
                     "&:hover": {
-                      backgroundColor: "purple",
+                      backgroundColor: "#9575cd",
                       color: "white",
                     },
                     float: "right",
