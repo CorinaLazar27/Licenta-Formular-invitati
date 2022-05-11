@@ -12,6 +12,7 @@ export const FormikDatePicker = (props) => {
       onChange={(e) => helpers.setValue(e)}
       mask="__.__.____"
       disabled={props.readOnly ?? false}
+      inputFormat="dd.MM.yyyy"
       renderInput={(params) => (
         <TextField
           {...params}

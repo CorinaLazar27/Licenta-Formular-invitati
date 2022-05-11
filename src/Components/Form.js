@@ -101,7 +101,12 @@ function FormPage() {
 
   const ValidationsForm = Yup.object().shape({
     event: Yup.string().required("Trebuie aleasă o opțiune!"),
-
+    date: Yup.string()
+      .required("Introdu data evenimentului")
+      .matches(
+        "^[0-9]{2}.[0-9]{2}.[0-9]{4}$",
+        "Data trebuie să fie de forma zz.ll.aaaa"
+      ),
     emailOrganizer: Yup.string()
       .required("Introdu email-ul organizatorului!")
       .email("Introdu un email valid!"),
@@ -178,40 +183,40 @@ function FormPage() {
           }}
           validationSchema={ValidationsForm}
           onSubmit={(values) => {
-            if (values.aperitivTraditionalRating === 0)
-              values.aperitivTraditionalRating = "0";
+            // if (values.aperitivTraditionalRating === 0)
+            //   values.aperitivTraditionalRating = "0";
 
-            if (values.aperitivVegetarianRating === 0)
-              values.aperitivVegetarianRating = "0";
-            if (values.aperitivFructeDeMareRating === 0)
-              values.aperitivFructeDeMareRating = "0";
+            // if (values.aperitivVegetarianRating === 0)
+            //   values.aperitivVegetarianRating = "0";
+            // if (values.aperitivFructeDeMareRating === 0)
+            //   values.aperitivFructeDeMareRating = "0";
 
-            if (values.supaTaieteiRating === 0) values.supaTaieteiRatin = "0";
-            if (values.ciorbaAcraRating === 0) values.ciorbaAcraRating = "0";
-            if (values.ciorbaCartofiRating === 0)
-              values.ciorbaCartofiRating = "0";
-            if (values.ciorbaPerisoareRating === 0)
-              values.ciorbaPerisoareRating = "0";
+            // if (values.supaTaieteiRating === 0) values.supaTaieteiRatin = "0";
+            // if (values.ciorbaAcraRating === 0) values.ciorbaAcraRating = "0";
+            // if (values.ciorbaCartofiRating === 0)
+            //   values.ciorbaCartofiRating = "0";
+            // if (values.ciorbaPerisoareRating === 0)
+            //   values.ciorbaPerisoareRating = "0";
 
-            if (values.sarmaleRating === 0) values.sarmaleRating = "0";
-            if (values.carnePuiRating === 0) values.carnePuiRating = "0";
-            if (values.carnePorcRating === 0) values.carnePorcRating = "0";
-            if (values.carneVitaRating === 0) values.carneVitaRating = "0";
+            // if (values.sarmaleRating === 0) values.sarmaleRating = "0";
+            // if (values.carnePuiRating === 0) values.carnePuiRating = "0";
+            // if (values.carnePorcRating === 0) values.carnePorcRating = "0";
+            // if (values.carneVitaRating === 0) values.carneVitaRating = "0";
 
-            if (values.muzicaComercialaRating === 0)
-              values.muzicaComercialaRating = "0";
-            if (values.muzicaDiscoRating === 0) values.muzicaDiscoRating = "0";
-            if (values.muzicaPopRating === 0) values.muzicaPopRating = "0";
-            if (values.muzicaRockRating === 0) values.muzicaRockRating = "0";
-            if (values.muzicaDePetrecereRating === 0)
-              values.muzicaDePetrecereRating = "0";
-            if (
-              typeof values.date === "object" &&
-              values.date !== null &&
-              "toLocaleDateString" in values.date
-            ) {
-              values.date = values.date.toLocaleDateString();
-            }
+            // if (values.muzicaComercialaRating === 0)
+            //   values.muzicaComercialaRating = "0";
+            // if (values.muzicaDiscoRating === 0) values.muzicaDiscoRating = "0";
+            // if (values.muzicaPopRating === 0) values.muzicaPopRating = "0";
+            // if (values.muzicaRockRating === 0) values.muzicaRockRating = "0";
+            // if (values.muzicaDePetrecereRating === 0)
+            //   values.muzicaDePetrecereRating = "0";
+            // if (
+            //   typeof values.date === "object" &&
+            //   values.date !== null &&
+            //   "toLocaleDateString" in values.date
+            // ) {
+            //   values.date = values.date.toLocaleDateString();
+            // }
             // values.date = values.date.toLocaleDateString();
             console.log("SUBMIT");
             ratingChestionar(values);
@@ -250,9 +255,14 @@ function FormPage() {
                 /> */}
               </Grid>
               <Grid item xs={12}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <FormikDatePicker name="date" label="Data evenimentului" />
-                </LocalizationProvider>
+                </LocalizationProvider> */}
+                <FormikTextField
+                  id="date"
+                  name="date"
+                  label="Data evenimentului"
+                ></FormikTextField>
               </Grid>
 
               <Grid item xs={12}>
