@@ -183,33 +183,33 @@ function FormPage() {
           }}
           validationSchema={ValidationsForm}
           onSubmit={(values) => {
-            // if (values.aperitivTraditionalRating === 0)
-            //   values.aperitivTraditionalRating = "0";
+            if (values.aperitivTraditionalRating === 0)
+              values.aperitivTraditionalRating = "0";
 
-            // if (values.aperitivVegetarianRating === 0)
-            //   values.aperitivVegetarianRating = "0";
-            // if (values.aperitivFructeDeMareRating === 0)
-            //   values.aperitivFructeDeMareRating = "0";
+            if (values.aperitivVegetarianRating === 0)
+              values.aperitivVegetarianRating = "0";
+            if (values.aperitivFructeDeMareRating === 0)
+              values.aperitivFructeDeMareRating = "0";
 
-            // if (values.supaTaieteiRating === 0) values.supaTaieteiRatin = "0";
-            // if (values.ciorbaAcraRating === 0) values.ciorbaAcraRating = "0";
-            // if (values.ciorbaCartofiRating === 0)
-            //   values.ciorbaCartofiRating = "0";
-            // if (values.ciorbaPerisoareRating === 0)
-            //   values.ciorbaPerisoareRating = "0";
+            if (values.supaTaieteiRating === 0) values.supaTaieteiRating = "0";
+            if (values.ciorbaAcraRating === 0) values.ciorbaAcraRating = "0";
+            if (values.ciorbaCartofiRating === 0)
+              values.ciorbaCartofiRating = "0";
+            if (values.ciorbaPerisoareRating === 0)
+              values.ciorbaPerisoareRating = "0";
 
-            // if (values.sarmaleRating === 0) values.sarmaleRating = "0";
-            // if (values.carnePuiRating === 0) values.carnePuiRating = "0";
-            // if (values.carnePorcRating === 0) values.carnePorcRating = "0";
-            // if (values.carneVitaRating === 0) values.carneVitaRating = "0";
+            if (values.sarmaleRating === 0) values.sarmaleRating = "0";
+            if (values.carnePuiRating === 0) values.carnePuiRating = "0";
+            if (values.carnePorcRating === 0) values.carnePorcRating = "0";
+            if (values.carneVitaRating === 0) values.carneVitaRating = "0";
 
-            // if (values.muzicaComercialaRating === 0)
-            //   values.muzicaComercialaRating = "0";
-            // if (values.muzicaDiscoRating === 0) values.muzicaDiscoRating = "0";
-            // if (values.muzicaPopRating === 0) values.muzicaPopRating = "0";
-            // if (values.muzicaRockRating === 0) values.muzicaRockRating = "0";
-            // if (values.muzicaDePetrecereRating === 0)
-            //   values.muzicaDePetrecereRating = "0";
+            if (values.muzicaComercialaRating === 0)
+              values.muzicaComercialaRating = "0";
+            if (values.muzicaDiscoRating === 0) values.muzicaDiscoRating = "0";
+            if (values.muzicaPopRating === 0) values.muzicaPopRating = "0";
+            if (values.muzicaRockRating === 0) values.muzicaRockRating = "0";
+            if (values.muzicaDePetrecereRating === 0)
+              values.muzicaDePetrecereRating = "0";
             // if (
             //   typeof values.date === "object" &&
             //   values.date !== null &&
@@ -218,6 +218,16 @@ function FormPage() {
             //   values.date = values.date.toLocaleDateString();
             // }
             // values.date = values.date.toLocaleDateString();
+            console.log("completat", values.aperitivTraditionalRating);
+            console.log("necompletat", values.aperitivVegetarianRating);
+            console.log(
+              "tip completat",
+              typeof values.aperitivTraditionalRating
+            );
+            console.log(
+              "tip necompletat",
+              typeof values.aperitivVegetarianRating
+            );
             console.log("SUBMIT");
             ratingChestionar(values);
           }}
