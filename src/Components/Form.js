@@ -30,6 +30,10 @@ function FormPage() {
 
   useEffect(() => {
     getURL();
+    if (!window.location.hash) {
+      window.location = window.location + "#loaded";
+      window.location.reload();
+    }
   }, []);
 
   const [openError, setOpenError] = useState(false);
@@ -150,7 +154,7 @@ function FormPage() {
         sx={{
           marginTop: "5vh",
           marginBottom: "5vh",
-          width: "100vw",
+          width: "85vw",
           backgroundColor: "white",
         }}
       >
