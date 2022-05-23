@@ -127,7 +127,7 @@ function FormPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#9575cd",
+        backgroundColor: "#2C5E1A",
       }}
     >
       <Snackbar
@@ -694,10 +694,10 @@ function FormPage() {
                   id="fillpdfbutton"
                   type="submit"
                   sx={{
-                    backgroundColor: "#9575cd",
+                    backgroundColor: "#2C5E1A",
                     color: "white",
                     "&:hover": {
-                      backgroundColor: "#9575cd",
+                      backgroundColor: "#2C5E1A",
                       color: "white",
                     },
                     float: "right",
