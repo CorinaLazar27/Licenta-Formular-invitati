@@ -10,7 +10,7 @@ function SuccesFormPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#9575cd",
+        backgroundColor: "#2C5E1A",
       }}
     >
       <Box
