@@ -57,7 +57,7 @@ function FormPage() {
     console.log("Rating Chestionar");
     axios({
       method: "POST",
-      url: "http://localhost:5000/ratingChestionar",
+      url: "https://server-licenta.azurewebsites.net/ratingChestionar",
       data: {
         event: values.event,
         date: values.date,
